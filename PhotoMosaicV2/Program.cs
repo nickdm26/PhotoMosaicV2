@@ -17,6 +17,17 @@ if (app.Environment.IsDevelopment())
 }
 
 
+app.MapGet("/", () =>
+{
+    
+    return "Test You can see me!!!";
+});
+
+app.MapGet("/Test", () =>
+{
+    return "Can you see this?";
+});
+
 app.MapGet("/Hello", () =>
 {
     var hello = new Hello();
