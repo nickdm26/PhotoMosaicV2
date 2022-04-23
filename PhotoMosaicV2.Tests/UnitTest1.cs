@@ -9,7 +9,7 @@ namespace PhotoMosaicV2.Tests
     public class UnitTest1
     {
         [DataTestMethod()]
-        [DataRow("Hello World")]
+        [DataRow("Hello Worlds")]
         public void GetMessageTest(string expected)
         {
             Hello hello = new Hello();
