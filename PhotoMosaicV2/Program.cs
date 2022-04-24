@@ -20,12 +20,12 @@ if (app.Environment.IsDevelopment())
 app.MapGet("/", () =>
 {
     
-    return "Test You can see me!!!";
+    return "Test You can see me!!! trying pipeline again";
 });
 
 app.MapGet("/Test", () =>
 {
-    return "Can you see this?";
+    return "Can you see this? testing pipeline again";
 });
 
 app.MapGet("/Hello", () =>
