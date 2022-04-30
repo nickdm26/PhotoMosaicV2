@@ -52,7 +52,6 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         command: 'Build'
         dockerfile: $(dockerfilePath)
-        buildContext: '.'
 
     - pwsh: |
        $id=docker images --filter "label=test=true" -q | Select-Object -First 1
