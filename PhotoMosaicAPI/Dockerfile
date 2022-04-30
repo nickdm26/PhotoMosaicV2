@@ -20,7 +20,7 @@ FROM build AS test
 LABEL test=true
 #RUN dotnet test --no-build -c Release --results-directory /testresults --logger "trx;LogFileName=test_results.trx" "PhotoMosaicV2.Tests/PhotoMosaicV2.Tests.csproj"
 #ENTRYPOINT [ "dotnet", "test", "PhotoMosaicV2.Tests/PhotoMosaicV2.Tests.csproj", "--logger", "trx;LogFileName=test_results.trx" ]
-RUN dotnet test "PhotoMosaicV2.Tests/PhotoMosaicV2.Tests.csproj" --logger "trx;LogFileName=test_results.trx"
+RUN dotnet test "PhotoMosaicV2.Tests/PhotoMosaicV2.Tests.csproj" --results-directory /testresults --logger "trx;LogFileName=test_results.trx"
 
 FROM build AS publish
 RUN dotnet publish "PhotoMosaicV2/PhotoMosaicV2.csproj" -c Release -o /app/publish
