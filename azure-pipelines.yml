@@ -13,7 +13,7 @@ variables:
   dockerRegistryServiceConnection: 'd01b17d9-5b22-43e8-8468-c6cb7ae55862'
   imageRepository: 'photomosaicv2'
   containerRegistry: 'nickdm26containerregistry.azurecr.io'
-  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
+  dockerfilePath: '$(Build.SourcesDirectory)/PhotoMosaicAPI/Dockerfile'
   tag: '$(Build.BuildId)'
 
   # Agent VM image name
