@@ -25,7 +25,7 @@ app.MapGet("/", () =>
 
 app.MapGet("/Test", () =>
 {
-    return "Can you see this? testing pipeline again, V2";
+    return "Test Test";
 });
 
 app.MapGet("/Hello", () =>
