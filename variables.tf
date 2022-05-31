@@ -3,5 +3,13 @@ variable "resource_group_name" {
 }
 
 variable "location" {
-  default = "australiaeast"
+  default = "westus"
+}
+
+variable "tag" {
+  description = "tags for PhotoMosaicV2 Resource's"
+  default = {
+    Project    = "PhotoMosaicV2"
+    Enviroment = "Test"
+  }
 }
