@@ -55,66 +55,21 @@ resource "azurerm_linux_web_app" "alwa" {
   client_certificate_mode = "Required"
 
   site_config {
-    # app_command_line = ""
-    # linux_fx_version = "DOCKER|${azurerm_container_registry.acr.name}.azurecr.io/photomosaicv2api:latest"
-    always_on = false
-
-    # docker {
-    #   registry_url      = azurerm_container_registry.acr.login_server
-    #   registry_username = azurerm_container_registry.acr.admin_username
-    #   registry_password = azurerm_container_registry.acr.admin_password
-    # }
+    always_on                               = false
+    container_registry_use_managed_identity = false
+    managed_pipeline_mode                   = "Integrated"
     application_stack {
-      docker_image     = "photomosaicv2.azurecr.io/photomosaicv2api:latest"
-      docker_image_tag = "latest"
-      # dotnet_version   = "6.0"
+      docker_image     = "${azurerm_container_registry.acr.login_server}/${var.docker_image}"
+      docker_image_tag = var.docker_image_tag
     }
   }
 
   app_settings = {
-    "DOCKER_REGISTRY_SERVER_URL"      = azurerm_container_registry.acr.login_server
-    "DOCKER_REGISTRY_SERVER_USERNAME" = azurerm_container_registry.acr.admin_username
-    "DOCKER_REGISTRY_SERVER_PASSWORD" = azurerm_container_registry.acr.admin_password
-  }
-
-  # site_config {
-  #   always_on = false
-  #   application_stack {
-  #     docker_image     = "photomosaicv2.azurecr.io/photomosaicv2api"
-  #     docker_image_tag = "latest"
-  #     registry_url       = azurerm_container_registry.acr.login_server
-  #     registry_username  = azurerm_container_registry.acr.admin_username
-  #     registry_password  = azurerm_container_registry.acr.admin_password
-  #   }
-  # }
-}
-
-resource "azurerm_linux_web_app" "alwa2" {
-  name                    = "tfphotomosaicv2test"
-  resource_group_name     = azurerm_resource_group.rg.name
-  location                = azurerm_resource_group.rg.location
-  service_plan_id         = azurerm_service_plan.asp.id
-  tags                    = var.tag
-  client_affinity_enabled = true
-  client_certificate_mode = "Required"
-  enabled                 = true
-
-  app_settings = {
-    "DOCKER_CUSTOM_IMAGE_NAME"        = "photomosaicv2api:latest"
+    "DOCKER_CUSTOM_IMAGE_NAME"        = "${var.docker_image}:${var.docker_image_tag}"
     "DOCKER_ENABLE_CI"                = "true"
     "DOCKER_REGISTRY_SERVER_URL"      = azurerm_container_registry.acr.login_server
     "DOCKER_REGISTRY_SERVER_USERNAME" = azurerm_container_registry.acr.admin_username
     "DOCKER_REGISTRY_SERVER_PASSWORD" = azurerm_container_registry.acr.admin_password
-  }
-
-  site_config {
-    always_on = false
-    container_registry_use_managed_identity = false
-    managed_pipeline_mode = "Integrated"
-    application_stack {
-      docker_image     = "photomosaicv2.azurecr.io/photomosaicv2api"
-      docker_image_tag = "latest"
-    }
   }
 }
 
@@ -126,7 +81,7 @@ resource "azurerm_container_registry_webhook" "webhook" {
 
   service_uri = "https://photomosaicv2.azurewebsites.net"
   status      = "enabled"
-  scope       = "photomosaicv2api:*"
+  scope       = "${var.docker_image}:*"
   actions     = ["push"]
   custom_headers = {
     "Content-Type" = "application/json"

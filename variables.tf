@@ -13,3 +13,11 @@ variable "tag" {
     Enviroment = "Test"
   }
 }
+
+variable "docker_image" {
+  default = "photomosaicv2api"
+}
+
+variable "docker_image_tag" {
+  default = "latest"
+}
